@@ -1,0 +1,12 @@
+
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(þÂî¹üÿÿÿÿ8ñ»‡Õ…2J$cf1fdaea-7c80-4f19-b349-5492c3e36c53
+r
+java:S3655 "PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(˜Ãùõúÿÿÿÿ8›Œ»Õ…2
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8èí”Õ…2J$808d1d09-19c8-40e3-be5f-5792a578be91
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8èí”Õ…2J$50b45f7b-6a73-48ca-8d15-ad477599cc20
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8èí”Õ…2J$fc0dbde2-a1c3-49bf-93a1-8c72a240d107
+—
+java:S62049"zReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()' and ensure that the list is unmodified.(ã¤£’8ÚŒ»Õ…2

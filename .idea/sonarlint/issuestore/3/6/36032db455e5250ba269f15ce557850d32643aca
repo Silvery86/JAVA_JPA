@@ -1,0 +1,9 @@
+
+š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¾¡ÏÏÿÿÿÿÿJ$f4a771c3-50ec-4687-8d30-cf433f507fe6
+|
+java:S1118
+":Add a private constructor to hide the implicit public one.(–´×8žò¹Ñ…2J$de234d72-d5f4-4c54-a091-3a9b1e7c00e1
+—
+java:S6204"zReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()' and ensure that the list is unmodified.(ã¤£’8÷Ž»Õ…2
+h
+java:S1128"FRemove this unused import 'com.t2208e.T2208E_Java_JPA.dto.CompanyDto'.(Ü«°Ìýÿÿÿÿ8øŽ»Õ…2

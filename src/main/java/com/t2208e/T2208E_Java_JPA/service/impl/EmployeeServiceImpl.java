@@ -6,10 +6,12 @@ import com.t2208e.T2208E_Java_JPA.mapper.EmployeeMapper;
 import com.t2208e.T2208E_Java_JPA.repository.EmployeeRepository;
 import com.t2208e.T2208E_Java_JPA.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired

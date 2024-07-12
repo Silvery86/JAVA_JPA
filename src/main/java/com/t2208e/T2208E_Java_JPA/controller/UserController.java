@@ -4,31 +4,35 @@ import com.t2208e.T2208E_Java_JPA.dto.PageDto;
 import com.t2208e.T2208E_Java_JPA.dto.UserDto;
 import com.t2208e.T2208E_Java_JPA.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/users")
 public class UserController {
+
     @Autowired
     private UserService userService;
-    @GetMapping("/users")
-    public PageDto get(){
-        return userService.search();
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+        userDto.setId(id);  // Ensure the ID in the DTO matches the path variable
+        UserDto updatedUser = userService.updateUser(userDto);
+        return ResponseEntity.ok(updatedUser);
     }
-    @PostMapping("/users")
-    public PageDto search(@RequestBody UserDto userDto){
-        return userService.search(userDto);
+
+    @PostMapping("/search")
+    public ResponseEntity<PageDto> searchUsers(@RequestBody UserDto userDto) {
+        PageDto pageDto = userService.search(userDto);
+        return ResponseEntity.ok(pageDto);
     }
-    @PostMapping("/user")
-    public PageDto add(@RequestBody  UserDto userDto){
-        return userService.search(userDto);
-    }
-    @PutMapping("/user")
-    public PageDto update(@RequestBody  UserDto userDto){
-        return userService.search(userDto);
-    }
-    @DeleteMapping("/user")
-    public PageDto delete(@RequestBody  UserDto userDto){
-        return userService.search(userDto);
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+        userService.deleteUserById(userId);
+        return ResponseEntity.ok("User deleted successfully");
     }
 }

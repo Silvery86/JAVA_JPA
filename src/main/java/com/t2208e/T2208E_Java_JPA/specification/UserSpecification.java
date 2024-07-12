@@ -18,7 +18,7 @@ public class UserSpecification {
             List<Predicate> predicates = new ArrayList<>();
             if(!StringUtils.isEmpty(criteria.getUserName())){
                 // menh de : like  , ko phan biet hoa thuong
-                predicates.add( cb.like(cb.upper(root.get("username")),
+                predicates.add( cb.like(cb.upper(root.get("userName")),
                         "%"+ criteria.getUserName().toUpperCase() + "%"));
             }
             if(!StringUtils.isEmpty(criteria.getFirstName())){

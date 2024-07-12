@@ -12,6 +12,6 @@ public class DepartmentDto {
     private String departmentName;
     private String roomNo;
     private int numberEmployee;
-    private Long companyId;
+    private CompanyDto company;
     private List<UserDto> usersDto;
 }

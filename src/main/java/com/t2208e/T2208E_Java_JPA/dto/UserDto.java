@@ -17,5 +17,6 @@ public class UserDto extends PadingDto{
     private Date createdTime;
     private String updatedBy;
     private Date updatedTime;
-    private Long departmentId;
+    private DepartmentDto department;
+
 }

@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> , JpaSpecificationExecutor<User> {
     @Query("SELECT u FROM User u WHERE u.userName LIKE %:userName% AND u.address LIKE %:address%")
     List<User> findByUserNameAndAddress(@Param(value = "userName") String userName, @Param(value = "address") String address);
+    Optional<User> findById(Long id);
 }

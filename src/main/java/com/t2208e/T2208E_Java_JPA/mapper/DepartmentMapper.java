@@ -15,6 +15,7 @@ public class DepartmentMapper {
     public static DepartmentDto entityToDto(Department department) {
         DepartmentDto dto = new DepartmentDto();
         BeanUtils.copyProperties(department, dto);
+        dto.setNumberEmployee(department.getUsers().size());
         if (department.getCompany() != null) {
             dto.setCompany(CompanyMapper.entityToDto(department.getCompany()));
         }

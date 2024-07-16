@@ -90,6 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public UserDto updateUser(UserDto dto) {
         User userToUpdate = userRepository.findById(dto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
@@ -100,11 +101,26 @@ public class UserServiceImpl implements UserService {
         userToUpdate.setAddress(dto.getAddress());
         userToUpdate.setUpdatedBy(dto.getUpdatedBy());
         userToUpdate.setUpdatedTime(new Date());
+
         // Update department details if provided
         if (dto.getDepartment() != null && dto.getDepartment().getId() != null) {
-            userToUpdate.setDepartment(departmentRepository.findById(dto.getDepartment().getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Department not found")));
+            Department oldDepartment = userToUpdate.getDepartment();
+            Department newDepartment = departmentRepository.findById(dto.getDepartment().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Department not found"));
+
+            if (!oldDepartment.equals(newDepartment)) {
+                // Remove from old department
+                oldDepartment.setNumberEmployee(oldDepartment.getNumberEmployee() - 1);
+                departmentRepository.save(oldDepartment);
+
+                // Add to new department
+                newDepartment.setNumberEmployee(newDepartment.getNumberEmployee() + 1);
+                departmentRepository.save(newDepartment);
+
+                userToUpdate.setDepartment(newDepartment);
+            }
         }
+
         // Save and return updated user entity
         User updatedUser = userRepository.save(userToUpdate);
         return UserMapper.entityToDto(updatedUser);
@@ -114,6 +130,12 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(Long userId) {
         User userToDelete = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        // Update numberEmployee
+        Department department = userToDelete.getDepartment();
+        department.setNumberEmployee(department.getNumberEmployee() - 1);
+        departmentRepository.save(department);
+
         userRepository.delete(userToDelete);
     }
 

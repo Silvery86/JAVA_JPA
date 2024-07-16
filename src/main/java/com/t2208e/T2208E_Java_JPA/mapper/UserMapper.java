@@ -10,30 +10,15 @@ public class UserMapper {
     public static UserDto entityToDto(User user) {
         UserDto dto = new UserDto();
         BeanUtils.copyProperties(user, dto);
-
         if (user.getDepartment() != null) {
-            DepartmentDto departmentDto = new DepartmentDto();
-            departmentDto.setId(user.getDepartment().getId());
-            departmentDto.setDepartmentName(user.getDepartment().getDepartmentName());
-            departmentDto.setRoomNo(user.getDepartment().getRoomNo());
-            departmentDto.setNumberEmployee(user.getDepartment().getNumberEmployee());
-            dto.setDepartment(departmentDto);
+            dto.setDepartment(DepartmentMapper.entityToDto(user.getDepartment()));
         }
-
         return dto;
     }
 
     public static User dtoToEntity(UserDto dto) {
         User user = new User();
         BeanUtils.copyProperties(dto, user);
-
-        // Set department entity if departmentId is provided
-        if (dto.getDepartment() != null && dto.getDepartment().getId() != null) {
-            Department department = new Department();
-            department.setId(dto.getDepartment().getId());
-            user.setDepartment(department);
-        }
-
         return user;
     }
 }

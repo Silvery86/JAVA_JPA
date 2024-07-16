@@ -13,26 +13,12 @@ public class CorporationMapper {
     public static CorporationDto entityToDto(Corporation corporation) {
         CorporationDto dto = new CorporationDto();
         BeanUtils.copyProperties(corporation, dto);
-
-        // Map companies
-        List<CompanyDto> companiesDto = corporation.getCompanies().stream()
-                .map(CompanyMapper::entityToDto)
-                .collect(Collectors.toList());
-        dto.setCompaniesDto(companiesDto);
-
         return dto;
     }
 
     public static Corporation dtoToEntity(CorporationDto dto) {
         Corporation corporation = new Corporation();
         BeanUtils.copyProperties(dto, corporation);
-
-        // Set companies
-        List<Company> companies = dto.getCompaniesDto().stream()
-                .map(CompanyMapper::dtoToEntity)
-                .collect(Collectors.toList());
-        corporation.setCompanies(companies);
-
         return corporation;
     }
 }

@@ -1,5 +1,6 @@
 package com.t2208e.T2208E_Java_JPA.service.impl;
 
+
 import com.t2208e.T2208E_Java_JPA.config.properties.CommonProperties;
 import com.t2208e.T2208E_Java_JPA.dto.PageDto;
 import com.t2208e.T2208E_Java_JPA.dto.UserDto;
@@ -15,6 +16,10 @@ import com.t2208e.T2208E_Java_JPA.repository.DepartmentRepository;
 import com.t2208e.T2208E_Java_JPA.repository.UserRepository;
 import com.t2208e.T2208E_Java_JPA.service.UserService;
 import com.t2208e.T2208E_Java_JPA.specification.UserSpecification;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +27,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,12 +43,8 @@ public class UserServiceImpl implements UserService {
     private CommonProperties commonProperties;
     @Autowired
     private DepartmentRepository departmentRepository;
-
-    @Autowired
-    private CompanyRepository companyRepository;
-
-    @Autowired
-    private CorporationRepository corporationRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public User findById(long id) {
@@ -100,9 +102,8 @@ public class UserServiceImpl implements UserService {
         userToUpdate.setUpdatedTime(new Date());
         // Update department details if provided
         if (dto.getDepartment() != null && dto.getDepartment().getId() != null) {
-            Department department = departmentRepository.findById(dto.getDepartment().getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Department not found"));
-            userToUpdate.setDepartment(department);
+            userToUpdate.setDepartment(departmentRepository.findById(dto.getDepartment().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Department not found")));
         }
         // Save and return updated user entity
         User updatedUser = userRepository.save(userToUpdate);
@@ -115,4 +116,12 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         userRepository.delete(userToDelete);
     }
+
+    @Override
+    public UserDto getUserByIdWithDetails(long id) {
+        return userRepository.findByIdWithDetails(id)
+                .map(UserMapper::entityToDto)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
 }

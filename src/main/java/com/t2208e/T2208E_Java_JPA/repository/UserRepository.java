@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, Long> , JpaSpecifica
     @Query("SELECT u FROM User u WHERE u.userName LIKE %:userName% AND u.address LIKE %:address%")
     List<User> findByUserNameAndAddress(@Param(value = "userName") String userName, @Param(value = "address") String address);
     Optional<User> findById(Long id);
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.department d LEFT JOIN FETCH d.company c LEFT JOIN FETCH c.corporation WHERE u.id = :id")
+    Optional<User> findByIdWithDetails(@Param("id") Long id);
 }

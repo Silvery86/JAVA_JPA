@@ -11,6 +11,6 @@ public class CompanyDto {
     private Long id;
     private String companyName;
     private int numberDepartment;
-    private Long corporationId;
+    private CorporationDto corporation;
     private List<DepartmentDto> departmentsDto;
 }

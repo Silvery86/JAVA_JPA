@@ -15,4 +15,5 @@ public interface UserService {
     List<UserDto> searchUsers(String userName, String address);
     UserDto updateUser(UserDto userDto);
     void deleteUserById(Long userId);
+    UserDto getUserByIdWithDetails(long id);
 }

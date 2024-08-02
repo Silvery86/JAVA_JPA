@@ -1,5 +1,6 @@
 package com.t2208e.T2208E_Java_JPA.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,11 +15,13 @@ import java.util.List;
 @Table(name = "manufacturer")
 public class Manufacturer {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String origin;
     private String description;
-    @ManyToOne()
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "manufacturer", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Product> products;
 }
